@@ -1,0 +1,51 @@
+<content-header name="Reservas" small="Listar Reservas"> </content-header>
+
+<div class="box-body" ng-controller="reservaCtrl">
+        
+  <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+     <b>Selecione o Laboratório</b>
+     <select class="form-control" ng-options="lab.id as lab.nome for lab in labs" ng-model="reserva.laboratory_id">
+     </select>
+  </div>
+     
+  <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+      <b> Data Que Deseja Buscar</b>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <input type="date" min="2018-00-00" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" class="form-control" id="dt_uso" ng-model="reserva.data">
+          </div>
+  </div>
+
+  <div>
+      <div class="input-group">
+      <br>
+        <button class="btn btn-primary" ng-click="listarReserva()">Buscar Reservas</button>
+      </div>  
+  </div>
+
+
+  <div class="box-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> USUÁRIO </th>
+                    <th> LABORATÓRIO</th>
+                    <th> DATA E HORÁRIO DA RESERVA</th>
+                    <th> DATA E HORÁRIO DE ENTRADA </th>
+                    <th> DATA E HORÁRIO DE SAÍDA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="reserva in reservas | orderBy:'dt_entrada'">
+                    <td>{{reserva.nome}}</td>
+                    <td>{{reserva.lab}}</td>
+                    <td>{{reserva.created_at}}</td>
+                    <td>{{reserva.dt_entrada}}</td>
+                    <td>{{reserva.dt_saida}}</td>
+                </tr>
+            </tbody>
+        </table>
+   </div>
+</div>

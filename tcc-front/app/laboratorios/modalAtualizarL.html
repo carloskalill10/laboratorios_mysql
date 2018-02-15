@@ -1,0 +1,26 @@
+<div class="modal fade" id="modal-atualizar" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin: 0px"> Atualizar nome do laboratório</h3>
+            </div>
+            <div class="modal-body" >
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <b>Laboratório:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <field id="nome" grid="12 12 12 12" placeholder="informe o nome do laboratório" model="lab.nome" > </field>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" ng-click="atualizarLab()">Atualizar</button>
+
+                <button class="btn  btn-danger" ng-click="fecharModal()">Sair</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

@@ -1,0 +1,31 @@
+<content-header name="Usuários" small="Listar"> </content-header>
+
+<div class="box-body"  ng-controller="userCtrl">
+  <table class="table">
+    <thead>
+      <tr>
+        <th> TAG </th>
+        <th> NOME </th>
+        <th> FUNÇÃO INSTITUCIONAL </th>
+        <th> TIPO DE USUÁRIO </th>
+        <th> AÇÕES </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="user in users | orderBy:'nome'">
+        <td>{{user.tag}}</td>
+        <td>{{user.nome}}</td>
+        <td>{{user.funcao}}</td>
+        <td>{{user.tipo}}</td>
+        <td style="width:100px;">
+          <button class="btn btn-warning" ng-click="iniciarModalU(user)"> <i class="fa fa-pencil"> </i> </button>
+          <button class="btn btn-danger" ng-click="iniciarModalDeletarU(user)"> <i class="fa fa-trash-o"> </i> </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div ng-include="'usuarios/modalAtualizarU.html'"></div>
+  <div ng-include="'usuarios/modalDeletarU.html'"></div>
+</div>

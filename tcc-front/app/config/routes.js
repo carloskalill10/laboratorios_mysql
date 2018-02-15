@@ -1,0 +1,32 @@
+angular.module('app').config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  function ($stateProvider, $urlRouterProvider){
+    $stateProvider.state('buscarA',{
+      url: "/acessos",
+      templateUrl:"acessos/buscarA.html"
+    }).state('buscarL',{
+      url:"/laboratorios/buscarL",
+      templateUrl:"laboratorios/buscarL/buscarL.html"
+    }).state('cadastrarL',{
+      url:"/laboratorios/cadastrarL",
+      templateUrl:"laboratorios/cadastrarL/cadastrarL.html"
+    }).state('buscarR',{
+      url:"/reservas/buscarR",
+      templateUrl:"reservas/buscarR/buscarR.html"
+    }).state('indexRes',{
+      url:"/reservas/indexRes",
+      templateUrl:"reservas/indexRes.html"
+    }).state('cadastrarR',{
+      url:"/reservas/cadastrarR",
+      templateUrl:"reservas/cadastrarR/cadastrarR.html"
+    }).state('buscarU',{
+      url:"/usuarios/buscarU",
+      templateUrl:"usuarios/buscarU/buscarU.html"
+    }).state('cadastrarU',{
+      url:"/usuarios/cadastrarU",
+      templateUrl:"usuarios/cadastrarU/cadastrarU.html"
+    })
+    $urlRouterProvider.otherwise('/reservas/indexRes')
+  }
+])

@@ -1,0 +1,47 @@
+<content-header name="Acessos" small="Listar Acessos"> </content-header>
+
+<div class="box-body" ng-controller="acessoCtrl">
+        
+  <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+     <b> Selecione o Laboratório  </b>
+          <select class="form-control" ng-options="lab.id as lab.nome for lab in labs" ng-model="acesso.laboratory_id">
+          </select>
+  </div>
+     
+  <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+      <b> Data Dos Acessos Que Deseja Buscar</b>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <input type="date" min="2018-00-00" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" class="form-control" id="dt_uso" ng-model="acesso.data">
+          </div>
+  </div>
+
+    
+  <div>
+      <div class="input-group">
+      <br>
+        <button class="btn btn-primary" ng-click="listarAcessos()">Buscar Acessos</button>
+      </div>  
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th> TAG </th>
+        <th> NOME </th>
+        <th> LABORATÓRIO </th>
+        <th> DATA E HORÁRIO DO ACESSO </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="acesso in acessos | orderBy:'created_at'">
+        <td>{{acesso.tag}}</td>
+        <td>{{acesso.nome}}</td>
+        <td>{{acesso.lab}}</td>
+        <td>{{acesso.created_at}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

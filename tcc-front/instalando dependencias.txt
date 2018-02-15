@@ -1,0 +1,5 @@
+abri o prompt entrei dentro da pasta tcc-front 
+digitei o comando "npm init"
+após configurar pelo terminal o arquivo package.json 
+eu abri o atom e modifiquei as dependencias e os scripts do arquivo package.json
+depois dentro da pasta tcc-front digitei o comando "npm i"
