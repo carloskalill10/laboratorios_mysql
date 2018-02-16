@@ -40,9 +40,6 @@
         })
         
       })
-
-
-      console.log(true)
     }
 
     $scope.create=function(){

@@ -49,9 +49,32 @@
             });
         };
 
+        $scope.iniciarModalDeletarR=function(res){
+            $('#modal-DeletarR').modal('show')
+            $scope.res=res
+            console.log($scope.res)
+        }
 
-        $scope.listarUsers();
-        $scope.listarLabs();
+        $scope.fecharModalDeletarR=function(){
+            $('#modal-DeletarR').modal('hide');
+            window.location.reload()
+        }
+
+        $scope.deletarR=function () {
+           const deletar = urls[2]+"/"+$scope.res.id
+            console.log($scope.res.id)
+            $http.delete(deletar).then(function(response){
+                console.log(response)
+              $scope.fecharModalDeletarR()
+              alert('Reserva Excluída')
+            }).catch(function(resp){
+               $scope.fecharModalDeletarR()
+              alert('Erro na exclusão')
+            })         }
+
+        $scope.listarUsers()
+        $scope.listarLabs()
+
     }
     function converterData(data, hora) {
         let date = new Date(data);

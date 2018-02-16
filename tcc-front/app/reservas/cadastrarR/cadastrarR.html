@@ -19,7 +19,6 @@
         <div class="form-group col-xs-12 col-sm-6 col-md-5 col-lg-5">
           <label>Nome do Laboratório</label>
           <select class="form-control" ng-options="lab.id as lab.nome for lab in labs" ng-model="reserva.laboratory_id">
-
           </select>
         </div>
 
@@ -30,10 +29,8 @@
               <i class="fa fa-calendar"></i>
             </div>
             <input type="date" min="2018-00-00" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" class="form-control" id="dt_uso" ng-model="reserva.data">
-            
           </div>
         </div>
-
 
         <div class="bootstrap-timepicker col-xs-12 col-sm-6 col-md-5 col-lg-5">
           <div class="form-group">
@@ -59,9 +56,6 @@
             </div>
           </div>
         </div>
-
-
-
       </div>
 
       <div class="box-footer">

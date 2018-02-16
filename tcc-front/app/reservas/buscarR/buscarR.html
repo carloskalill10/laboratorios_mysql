@@ -46,10 +46,7 @@
                     <td>{{reserva.dt_entrada}}</td>
                     <td>{{reserva.dt_saida}}</td>
                     <td style="width:100px;">
-                        <button class="btn btn-warning" ng-click="iniciarModalR(lab)">
-                            <i class="fa fa-pencil"> </i>
-                        </button>
-                        <button class="btn btn-danger" ng-click="iniciarModalDeletarR(lab)">
+                        <button class="btn btn-danger" ng-click="iniciarModalDeletarR(reserva)">
                             <i class="fa fa-trash-o"> </i>
                         </button>
                     </td>
@@ -58,6 +55,5 @@
         </table>
     </div>
 
-    <div ng-include="'laboratorios/modalAtualizarR.html'"></div>
-    <div ng-include="'laboratorios/modalDeletarR.html'"></div>
+    <div ng-include="'reservas/modalDeletarR.html'"></div>
 </div>

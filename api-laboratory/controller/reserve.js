@@ -17,6 +17,7 @@ module.exports = app => {
                 res.status(412).json({ error: error.message });
             })
         },
+        
         findAcessForDateAndLab: (req, res) => {
             const query = req.params;
             sequelize.query(`SELECT Reserves.id,Users.nome,Users.tag,Laboratories.nome as lab, date_format(Reserves.created_at,'%d/%m/%Y %H:%i:%s') as created_at,date_format(Reserves.dt_entrada,'%d/%m/%Y %H:%i:%s') as dt_entrada,date_format(Reserves.dt_saida,'%d/%m/%Y %H:%i:%s') as dt_saida FROM Reserves 
