@@ -43,7 +43,9 @@
             let data= converterOnlyData($scope.reserva.data)
             $http.get(urls[2]+"/"+data+"/"+$scope.reserva.laboratory_id).then(function (response) {
                 $scope.reservas = response.data;
-                
+                if (response.data.length==0){
+                    alert ('Nenhuma reserva foi encontrada para esse laboratório e para essa data!')
+                }
             }).catch(function (resp) {
                 console.log(resp);
             });

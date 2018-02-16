@@ -25,6 +25,9 @@
       let data= converterOnlyData($scope.acesso.data)
       $http.get(urls[1]+"/"+data+"/"+$scope.acesso.laboratory_id).then(function (response) {
           $scope.acessos = response.data;
+          if (response.data.length==0){
+            alert ('Nenhum Acesso foi encontrado para esse laboratório e para essa data!')
+          }
       }).catch(function (resp) {
           console.log(resp);
       });

@@ -12,12 +12,12 @@ MFRC522 mfrc522(SS_PIN, RST_PIN); // Cria acesso MFRC522
 String tag; // codigo lido do rfid
 
 // Definições da rede Wifi
-const char* login = "Estudando";
-const char* senha = "golangvivi<3";
+const char* login = "motog5splus";
+const char* senha = "carlos098";
 
 // endereço IP local do Servidor Web instalado na Raspberry Pi 3
 // onde será exibida a página web
-const char* Host = "192.168.100.2";   
+const char* Host = "192.168.43.196";   
 
 WiFiClient client;
 
@@ -88,7 +88,7 @@ String metodoPOST()
     Serial.println("Conectado ao servidor");
     // Faz o HTTP POST request    
     client.println("POST /insert_aux HTTP/1.1");
-    client.println("Host: 192.168.0.28");
+    client.println("Host: 192.168.43.196");
     client.println("Content-Type: application/json");
     client.print("Content-Length: ");
     client.println(object.measureLength());

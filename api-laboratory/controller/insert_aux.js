@@ -5,9 +5,9 @@ module.exports = app => {
     const controllerInsert_aux = {
         createInsert_aux: (req, res) => {
             Insert_aux.create(req.body.insert_aux)
-                .then(result => res.json({ok:"ok"}))
+                .then(result => res.json({'ok':'ok'}))
                 .catch(error => {
-                    res.status(412).json({ ok:"nop" });
+                    res.status(412).json({'ok':'nop'});
                 });
 
         },

@@ -2,7 +2,7 @@ import bodyParser from "body-parser";
 
 module.exports = app => {
     app.set("port", 3000);
-    app.set("json spaces", 4);
+    //app.set("json spaces", 4);
     app.use(bodyParser.json());
     app.use(function (req, res, next) {
         res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
