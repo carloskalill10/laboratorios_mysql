@@ -110,12 +110,15 @@ String metodoPOST()
 
 
 //--------------------------------------------------------------------------------------
-
+#define verde 5 
+#define vermelho 0 
 void setup() {
   
  Serial.begin(115200);
-  pinMode(D3,OUTPUT); // LED VERDE
-  pinMode(D8,OUTPUT); // LED VERMELHO
+  pinMode(verde,OUTPUT); // LED VERDE - TX/GPIO 1
+  pinMode(vermelho,OUTPUT); // LED VERMELHO - RX/GPIO 3
+  digitalWrite(verde, LOW);
+  digitalWrite(vermelho, LOW);
   delay(250);
   Serial.println();
   Serial.println("Iniciando....");
@@ -146,22 +149,22 @@ void loop() {
         
         if (metodoPOST().equals(compara)){      // envia os dados ao servidor   
             Serial.println("enviou!!!!!!!!!");
-            digitalWrite(D3, HIGH); 
+            digitalWrite(verde, HIGH); 
             delay(1000);  
         }else{
             Serial.println("nao enviou, servidor nao disponivel!!!!!!!!!");
-            digitalWrite(D8, HIGH); 
+            digitalWrite(vermelho, HIGH); 
             delay(1000);  
         }
         
     }else{
         Serial.printf("não conectado a wifi...");
-        digitalWrite(D8, HIGH); 
+        digitalWrite(vermelho, HIGH); 
         delay(1000);      
     }
     delay (2000);
-    digitalWrite(D3, LOW);
-    digitalWrite(D8, LOW);
+    digitalWrite(verde, LOW);
+    digitalWrite(vermelho, LOW);
   }
 }
 

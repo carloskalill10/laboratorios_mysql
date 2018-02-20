@@ -139,7 +139,6 @@ void setup() {
   initWiFi();
 }
 
-
 void loop() {
   String compara="{\"ok\":\"ok\"}";
   if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()){ // Verifica se o cartao foi lido e ler
