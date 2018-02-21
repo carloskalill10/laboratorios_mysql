@@ -21,7 +21,8 @@
 #define SSID_LEN        50						// Numero de caracteres para o nome da rede (SSDI)
 #define PASS_LEN        30						// Numero de caracteres para a senha da rede
 #define DEVNAME_LEN		30						// Numero de caracteres para o nome do dispositivo
-
+#define num_host    15
+#define num_lab     5
 //
 // RFID configurtion
 //
@@ -53,11 +54,11 @@
 #define D1    5					        // Green LED
 #define D2    4					        // SDA pin for MFRC522
 #define D3    0					        // Red Led
-#define D4    2         		        // RST pin for MFRC522 / User LED
+#define D4    2         		    // RST pin for MFRC522 / User LED
 #define D5    14				        // SCK pin for MFRC522
 #define D6    12				        // MISO pin for MFRC522
 #define D7    13				        // MOSI pin for MFRC522
-#define D8    15		                // Locker Relay
+#define D8    15		            // Locker Relay
 #define D9    3		
 #define D10   1		
 		
@@ -109,12 +110,16 @@ String readCardStr;   			        // Stores scanned ID read from RFID Module in S
 // Create MFRC522 instance.
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-const char *SSID_AP     = "iot_device";					// Nome da ESP como Access Point
-const char *PASS_AP = "";								// Sem senha no modo Access Point
+const char *SSID_AP = "iot_device";					// Nome da ESP como Access Point
+const char *PASS_AP = "ifamcmdi";								// Sem senha no modo Access Point
 
 // endereço IP local do Servidor Web instalado na Raspberry Pi 3
 // onde será exibida a página web
-const char* Host = "192.168.0.39";   
+char host [num_host]= "192.168.0.39";   
+//-----------------------------------------------------------------
+//para cada um laboratorio o id_lab será diferente, depende do id cadastrado no laboratório
+char id_lab [num_lab]="0"; 
+//-----------------------------------------------------------------
 
 char SSID_STA[SSID_LEN] = "STA_SSID_NAME";				// Nome padrão da rede como Station
 char PASS_STA[PASS_LEN] = "";							// Senha padrao Station
@@ -132,7 +137,7 @@ ESP8266WebServer server(80);
 
 StaticJsonBuffer<300> jsonBuffer;
 JsonObject& object = jsonBuffer.createObject();
-JsonObject& dado = object.createNestedObject("insert_aux");
+JsonObject& dado = object.createNestedObject("acess");
 
 //-------------------------------------------------------------------------
 /*
@@ -326,6 +331,7 @@ void loop()
  */
 void montaJSON()
 {
+  dado["lab_id"] = id_lab;
   dado["tag"] = readCardStr;
 }
 
@@ -337,7 +343,7 @@ void montaJSON()
  */
 String metodoPOST()
 {
-  if (!client.connect(Host, 3000))     // aqui conectamos ao servidor
+  if (!client.connect(host, 3000))     // aqui conectamos ao servidor
   {
     Serial.println("-----------------------------");
     Serial.print("Nao foi possivel conectar ao servidor!\n");
@@ -348,7 +354,7 @@ String metodoPOST()
     Serial.println("Conectado ao servidor");
     
     // Faz o HTTP POST request    
-    client.println("POST /api/insert_aux HTTP/1.1");
+    client.println("POST /acess HTTP/1.1");
     client.println("Host: 192.168.0.28");
     client.println("Content-Type: application/json");
     client.print("Content-Length: ");
@@ -1320,7 +1326,11 @@ void handleLoad()
   data += gateway.toString();
   data += " ";
   data += devname;
-
+  data += " ";
+  data += host;
+  data += " ";
+  data += id_lab;
+  
   Serial.println(data);     
   server.send(200, "text/text", data);  
 }
@@ -1349,7 +1359,7 @@ void handleRoot()
   // o botão "Enviar" na página "CONF_page"
   if (server.hasArg("rede"))
   {
-	  sArg = server.arg("rede");
+	    sArg = server.arg("rede");
       Serial.println(sArg);
       sArg.toCharArray(SSID_STA, SSID_LEN);   
 
@@ -1366,9 +1376,17 @@ void handleRoot()
       gateway.fromString(server.arg("gatw"));
       Serial.println(gateway);                         
 
-	  sArg = server.arg("devname");
+	    sArg = server.arg("devname");
       Serial.println(sArg);
       sArg.toCharArray(devname, DEVNAME_LEN);   
+
+      sArg = server.arg("host");
+      Serial.println(sArg);
+      sArg.toCharArray(host, num_host);   
+
+      sArg = server.arg("id_lab");
+      Serial.println(sArg);
+      sArg.toCharArray(id_lab, num_lab);   
 
       saveBoardConfig();
  	  server.send(200, "text/html", CONFIRMATION_page);

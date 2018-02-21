@@ -78,6 +78,15 @@ const char CONF_page[] PROGMEM = R"=====(
 						<div class="data">
 							<input type="text" id="devname" name="devname">
 						</div>
+						<label>Nome do HOST</label>
+						<div class="data">
+							<input required pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$" id="host" name="host">
+						</div>
+						<label>ID do laboratório</label>
+						<div class="data">
+							<input type="text" id="id_lab" name="id_lab">
+						</div>
+
 
 						<div class="sub1">
 							<input type="submit" value="Enviar">
@@ -101,6 +110,8 @@ const char CONF_page[] PROGMEM = R"=====(
 						document.getElementById("subn").value = data_s[3];
 						document.getElementById("gatw").value = data_s[4];
 						document.getElementById("devname").value = data_s[5];
+						document.getElementById("host").value = data_s[6];
+						document.getElementById("is_lab").value = data_s[7];
 					}
 				};
 				xhttp.open("POST", "/load", true);
