@@ -4,12 +4,11 @@ LABCENTER PROTEUS TOOL INFORMATION FILE
 In case of difficulty, please e-mail support@labcenter.co.uk
 
 Tool set up for Proteus layout 'placa 1 - maior.pdsprj'.
-CADCAM generated at 19:24:37 on terça-feira, 20 de fevereiro de 2018.
+CADCAM generated at 10:13:12 on quarta-feira, 21 de fevereiro de 2018.
 
 File List
 ---------
 Bottom Copper           : placa 1 - maior - CADCAM Bottom Copper.GBR
-Mechanical 1            : placa 1 - maior - CADCAM Mechanical 1.GBR
 Drill, Plated, 1-16     : placa 1 - maior - CADCAM Drill L1 L16 Plated.GBR
 Netlist                 : placa 1 - maior - CADCAM Netlist.IPC
 

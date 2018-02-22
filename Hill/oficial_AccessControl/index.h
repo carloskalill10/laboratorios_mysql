@@ -82,7 +82,7 @@ const char CONF_page[] PROGMEM = R"=====(
 						<div class="data">
 							<input required pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$" id="host" name="host">
 						</div>
-						<label>ID do laboratório</label>
+						<label>ID do laboratorio </label>
 						<div class="data">
 							<input type="text" id="id_lab" name="id_lab">
 						</div>
