@@ -34,13 +34,8 @@
 //
 #define COMMON_ANODE
 
-#ifdef COMMON_ANODE
-#define LED_ON 	        LOW
-#define LED_OFF         HIGH
-#else       
 #define LED_ON 	        HIGH
 #define LED_OFF         LOW
-#endif      
         
 #define PRESSED	        LOW
 #define RELAY_ON        LOW
@@ -51,9 +46,9 @@
 // NodeMCU pinout
 //
 #define D0    16				        // User Button
-#define D1    5					        // Green LED
+#define D3    0					        // Green LED
 #define D2    4					        // SDA pin for MFRC522
-#define D3    0					        // Red Led
+#define D1    5					        // Red Led
 #define D4    2         		    // RST pin for MFRC522 / User LED
 #define D5    14				        // SCK pin for MFRC522
 #define D6    12				        // MISO pin for MFRC522
@@ -89,8 +84,8 @@
 // Area para definição de constantes e variáveis globais
 //************************************************************
 
-const uint8_t redLed = D3;		        // Set red Led Pin
-const uint8_t grnLed = D1;              // Set green Led Pin
+const uint8_t redLed = D1;		        // Set red Led Pin
+const uint8_t grnLed = D3;              // Set green Led Pin
 const uint8_t relay  = D8;     	        // Set Relay Pin
 const uint8_t button = D0;     	        // Button Pin
 
@@ -115,15 +110,15 @@ const char *PASS_AP = "ifamcmdi";								// Sem senha no modo Access Point
 
 // endereço IP local do Servidor Web instalado na Raspberry Pi 3
 // onde será exibida a página web
-char host [num_host]= "192.168.0.39";   
+char host [num_host]= "192.168.43.68";   
 //-----------------------------------------------------------------
 //para cada um laboratorio o id_lab será diferente, depende do id cadastrado no laboratório
-char id_lab [num_lab]="0"; 
+char id_lab [num_lab]="1"; 
 //-----------------------------------------------------------------
 
-char SSID_STA[SSID_LEN] = "STA_SSID_NAME";				// Nome padrão da rede como Station
-char PASS_STA[PASS_LEN] = "";							// Senha padrao Station
-char devname[DEVNAME_LEN]  = "*****";					// Nome padrao do Device
+char SSID_STA[SSID_LEN] = "motog5splus";				// Nome padrão da rede como Station
+char PASS_STA[PASS_LEN] = "carlos098";							// Senha padrao Station
+char devname[DEVNAME_LEN]  = "moto g 5s plus";					// Nome padrao do Device
 
 uint8_t mac[]    = {0x00,0x1A,0x90,0x00,0x00,0x01};		// MAC address do dispositivo
 IPAddress ip(192,168,0,54);								// IP padrão da ESP
@@ -133,6 +128,7 @@ IPAddress serverIP(192,168,0,39);						// IP do servidor
 
 
 WiFiClient client;
+
 ESP8266WebServer server(80);
 
 StaticJsonBuffer<300> jsonBuffer;
@@ -146,6 +142,7 @@ JsonObject& dado = object.createNestedObject("acess");
  */
 void setup() 
 {
+  clientConnect();
   // Board Pin Configuration
   pinMode(redLed, OUTPUT);
   pinMode(grnLed, OUTPUT);
@@ -265,7 +262,7 @@ void loop()
       montaJSON();
       
       // Verifica se o servidor autoriza o acesso
-      if (metodoPOST().equals("\"ok\":\"ok\""))
+      if (metodoPOST().equals("{\"ok\":\"ok\"}"))
       {
         // Tag cadastrada. Libera o acesso.
         Serial.println("-----------------------------");
@@ -319,6 +316,11 @@ void loop()
       case '2':
 	    dumpEEPROM(EE_ID_ADDR, EE_USER_TAG + TAG_AREA_LEN);
       break;
+
+      case '3':
+      clientConnect();
+      break;
+      
     }
   }
 }
@@ -343,41 +345,29 @@ void montaJSON()
  */
 String metodoPOST()
 {
-  if (!client.connect(host, 3000))     // aqui conectamos ao servidor
+  if(!client.connect(host,3000) )     // aqui conectamos ao servidor
   {
-    Serial.println("-----------------------------");
     Serial.print("Nao foi possivel conectar ao servidor!\n");
-  }
-  else
-  {
-    Serial.println("-----------------------------");
+  }else{    
     Serial.println("Conectado ao servidor");
-    
     // Faz o HTTP POST request    
     client.println("POST /acess HTTP/1.1");
-    client.println("Host: 192.168.0.28");
+    client.println("Host: 192.168.43.196");
     client.println("Content-Type: application/json");
     client.print("Content-Length: ");
     client.println(object.measureLength());
     client.println();
-    
-    // Envia o JSON para o servidor
-    object.printTo(client);
-
-    // Aguarda a resposta do servidor
-    while (client.connected()) 
-    {
-      String resposta = client.readStringUntil('\r');
-      if (resposta == "\n") 
-      {
+    object.printTo(client);    // envio do JSON
+    while (client.connected()) {
+     String resposta = client.readStringUntil('\r');
+      if (resposta == "\n") {
         break;
       }
     }
-
+    
     String resposta = client.readStringUntil('\r');
-    String resp = resposta.substring(1);
+    String resp=resposta.substring(1);
     Serial.println(resp);
-
     return resp; 
   }
 }
@@ -434,7 +424,20 @@ void denied()
   // Flash red LED
   flashLed(redLed, 100, 8, LED_OFF);
 }
-
+//------------------------------------------------------------------------
+bool clientConnect(){
+  if (!client.connect(host, 3000))     // aqui conectamos ao servidor
+  {
+    Serial.println("-----------------------------");
+    Serial.print("Nao foi possivel conectar ao servidor!\n");
+    return ("");
+  }
+  else
+  {
+    Serial.println("-----------------------------");
+    Serial.println("Conectado ao servidor");  
+  }
+}
 
 //-------------------------------------------------------------------------
 /*

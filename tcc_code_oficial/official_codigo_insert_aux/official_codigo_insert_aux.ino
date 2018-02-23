@@ -7,6 +7,17 @@
 #define RST_PIN 2 // RST-PIN MFRC522 - RFID - SPI - Modulo GPIO02
 #define SS_PIN  4  // SDA-PIN MFRC522 - RFID - SPI - Modulo GPIO4
 
+//
+#define D0    16                // User Button
+#define D1    5                 // Green LED
+#define D3    0                 // Red Led
+#define D5    14                // SCK pin for MFRC522
+#define D6    12                // MISO pin for MFRC522
+#define D7    13                // MOSI pin for MFRC522
+#define D8    15                // Locker Relay
+#define D9    3   
+#define D10   1   
+
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Cria acesso MFRC522
 
 String tag; // codigo lido do rfid
@@ -17,7 +28,7 @@ const char* senha = "carlos098";
 
 // endereço IP local do Servidor Web instalado na Raspberry Pi 3
 // onde será exibida a página web
-const char* Host = "192.168.43.196";   
+const char* Host = "192.168.43.68";   
 
 WiFiClient client;
 
@@ -110,15 +121,14 @@ String metodoPOST()
 
 
 //--------------------------------------------------------------------------------------
-#define verde 5 
-#define vermelho 0 
+ 
 void setup() {
   
  Serial.begin(115200);
-  pinMode(verde,OUTPUT); // LED VERDE - TX/GPIO 1
-  pinMode(vermelho,OUTPUT); // LED VERMELHO - RX/GPIO 3
-  digitalWrite(verde, LOW);
-  digitalWrite(vermelho, LOW);
+  pinMode(D1,OUTPUT); // LED VERDE - TX/GPIO 1
+  pinMode(D3,OUTPUT); // LED VERMELHO - RX/GPIO 3
+  digitalWrite(D1, LOW);
+  digitalWrite(D3, LOW);
   delay(250);
   Serial.println();
   Serial.println("Iniciando....");
@@ -149,22 +159,22 @@ void loop() {
         
         if (metodoPOST().equals(compara)){      // envia os dados ao servidor   
             Serial.println("enviou!!!!!!!!!");
-            digitalWrite(verde, HIGH); 
+            digitalWrite(D1, HIGH); 
             delay(1000);  
         }else{
             Serial.println("nao enviou, servidor nao disponivel!!!!!!!!!");
-            digitalWrite(vermelho, HIGH); 
+            digitalWrite(D3, HIGH); 
             delay(1000);  
         }
         
     }else{
         Serial.printf("não conectado a wifi...");
-        digitalWrite(vermelho, HIGH); 
+        digitalWrite(D3, HIGH); 
         delay(1000);      
     }
     delay (2000);
-    digitalWrite(verde, LOW);
-    digitalWrite(vermelho, LOW);
+    digitalWrite(D1, LOW);
+    digitalWrite(D3, LOW);
   }
 }
 

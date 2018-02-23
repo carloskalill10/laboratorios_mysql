@@ -7,6 +7,17 @@
 #define RST_PIN 2 // RST-PIN MFRC522 - RFID - SPI - Modulo GPIO02
 #define SS_PIN  4  // SDA-PIN MFRC522 - RFID - SPI - Modulo GPIO4
 
+//
+#define D0    16                // User Button
+#define D1    0                 // Green LED
+#define D3    5                 // Red LedLED
+#define D5    14                // SCK pin for MFRC522
+#define D6    12                // MISO pin for MFRC522
+#define D7    13                // MOSI pin for MFRC522
+#define D8    15                // Locker Relay
+#define D9    3   
+#define D10   1   
+
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Cria acesso MFRC522
 
 //-----------------------------------------------------------------
@@ -22,7 +33,7 @@ const char* senha = "carlos098";
 
 // endereço IP local do Servidor Web instalado na Raspberry Pi 3
 // onde será exibida a página web
-const char* Host = "192.168.43.196";   
+const char* Host = "192.168.43.68";   
 
 WiFiClient client;
 
@@ -100,7 +111,7 @@ String metodoPOST()
     Serial.println("Conectado ao servidor");
     // Faz o HTTP POST request    
     client.println("POST /acess HTTP/1.1");
-    client.println("Host: 192.168.43.196");
+    client.println("Host: 192.168.23.83");
     client.println("Content-Type: application/json");
     client.print("Content-Length: ");
     client.println(object.measureLength());
@@ -158,18 +169,18 @@ void loop() {
         if (metodoPOST().equals(compara)){      // envia os dados ao servidor   
             Serial.println(" enviou!!!!!!!!!");
             digitalWrite(D1, HIGH);
-            digitalWrite(D3, HIGH);
+            digitalWrite(D8, HIGH);
             delay(1000);  
             
         }else{
             Serial.println("nao enviou, servidor nao disponivel!!!!!!!!!");
-            digitalWrite(D8, HIGH);
+            digitalWrite(D3, HIGH);
             delay(1000);
         }
         
     }else{
             Serial.printf("não conectado a wifi...");
-            digitalWrite(D8, HIGH);
+            digitalWrite(D3, HIGH);
             delay(1000);
              
     }
