@@ -1,0 +1,20 @@
+FERRAZ, Reinaldo. Internet das Coisas. 11ª Mostra de Iniciação Científica Júnior, 2016.
+
+https://www.seucondominio.com.br/noticias/sistemas-controle
+
+CRUZ, Ariadne Arrais; LISBOA, Emerson Fausto. Webhome–automação residencial utilizando raspberry pi. Revista Ciência e Tecnologia, v. 17, n. 31, 2014.
+
+[4] Hobbytronics. Disponível em: <https://hobbytronics.com.pk/product/nodemcu/>. Acesso em: Fevereiro de 2018.
+
+https://www.filipeflop.com/blog/controle-acesso-leitor-rfid-arduino/
+
+https://angeliski.com.br/category/angularjs/
+
+http://matera.com/br/2015/05/26/primeiros-passos-com-node-js/
+
+https://www.eduonix.com/blog/web-programming-tutorials/getting-started-with-express-js/
+
+http://www.nanoshots.com.br/2016/05/resetando-senha-do-usuario-root-do.html
+
+Labcenter. Disponível em: <https://www.labcenter.com/education/>. Acesso em: Fevereiro de 2018.
+

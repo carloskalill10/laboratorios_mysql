@@ -92,9 +92,11 @@ void montaJSON(){
  */
 String metodoPOST()
 {
+   String resposta;
   if(!client.connect(Host,3000) )     // aqui conectamos ao servidor
   {
     Serial.print("Nao foi possivel conectar ao servidor!\n");
+    return ("");
   }else{    
     Serial.println("Conectado ao servidor");
     // Faz o HTTP POST request    
@@ -105,17 +107,15 @@ String metodoPOST()
     client.println(object.measureLength());
     client.println();
     object.printTo(client);    // envio do JSON
+    client.setTimeout(8000);
     while (client.connected()) {
-     String resposta = client.readStringUntil('\r');
-      if (resposta == "\n") {
-        break;
-      }
+      resposta = client.readStringUntil('\r');
+      Serial.println(resposta);
+      break;
     }
     
-    String resposta = client.readStringUntil('\r');
-    String resp=resposta.substring(1);
-    Serial.println(resp);
-    return resp; 
+    client.stop();
+    return resposta; 
   }
 }
 
@@ -141,7 +141,7 @@ void setup() {
 
 
 void loop() {
-  String compara="{\"ok\":\"ok\"}";
+  String compara="HTTP/1.1 200 OK";
   
   if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()){ // Verifica se o cartao foi lido e ler
     Serial.printf("Tag:");

@@ -2,7 +2,9 @@ module.exports = app => {
     const Insert_aux = app.db.models.Insert_aux;
     const sequelize = app.db.sequelize;
 
+
     const controllerInsert_aux = {
+        
         createInsert_aux: (req, res) => {
             Insert_aux.create(req.body.insert_aux)
                 .then(result => res.json({'ok':'ok'}))

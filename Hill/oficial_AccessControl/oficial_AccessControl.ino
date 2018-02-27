@@ -262,7 +262,7 @@ void loop()
       montaJSON();
       
       // Verifica se o servidor autoriza o acesso
-      if (metodoPOST().equals("{\"ok\":\"ok\"}"))
+      if (metodoPOST().equals("HTTP/1.1 200 OK"))
       {
         // Tag cadastrada. Libera o acesso.
         Serial.println("-----------------------------");
@@ -345,9 +345,15 @@ void montaJSON()
  */
 String metodoPOST()
 {
+  String resposta;
+  
+  digitalWrite(redLed, LED_ON);      // Make sure led is off
+  digitalWrite(grnLed, LED_ON);        // Make sure led is off
+  
   if(!client.connect(host,3000) )     // aqui conectamos ao servidor
   {
     Serial.print("Nao foi possivel conectar ao servidor!\n");
+    return ("");
   }else{    
     Serial.println("Conectado ao servidor");
     // Faz o HTTP POST request    
@@ -358,17 +364,16 @@ String metodoPOST()
     client.println(object.measureLength());
     client.println();
     object.printTo(client);    // envio do JSON
+    client.setTimeout(8000);
     while (client.connected()) {
-     String resposta = client.readStringUntil('\r');
-      if (resposta == "\n") {
-        break;
-      }
+      resposta = client.readStringUntil('\r');
+      Serial.println(resposta);
+      break;
     }
-    
-    String resposta = client.readStringUntil('\r');
-    String resp=resposta.substring(1);
-    Serial.println(resp);
-    return resp; 
+    client.stop();
+    digitalWrite(redLed, LED_OFF);      // Make sure led is off
+    digitalWrite(grnLed, LED_OFF);        // Make sure led is off
+    return resposta; 
   }
 }
 

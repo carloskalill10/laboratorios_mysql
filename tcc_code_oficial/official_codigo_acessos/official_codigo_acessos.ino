@@ -33,7 +33,7 @@ const char* senha = "carlos098";
 
 // endereço IP local do Servidor Web instalado na Raspberry Pi 3
 // onde será exibida a página web
-const char* Host = "192.168.43.68";   
+const char* Host = "192.168.43.196";   
 
 WiFiClient client;
 
@@ -104,30 +104,37 @@ void montaJSON(){
  */
 String metodoPOST()
 {
+  String resposta;
   if(!client.connect(Host,3000) )     // aqui conectamos ao servidor
   {
     Serial.print("Nao foi possivel conectar ao servidor!\n");
+    return ("");
   }else{    
     Serial.println("Conectado ao servidor");
     // Faz o HTTP POST request    
     client.println("POST /acess HTTP/1.1");
-    client.println("Host: 192.168.23.83");
+    client.println("Host: 192.168.43.196");
     client.println("Content-Type: application/json");
     client.print("Content-Length: ");
     client.println(object.measureLength());
     client.println();
     object.printTo(client);    // envio do JSON
+    client.setTimeout(8000);
     while (client.connected()) {
-     String resposta = client.readStringUntil('\r');
-      if (resposta == "\n") {
-        break;
-      }
+      resposta = client.readStringUntil('\r');
+      Serial.println(resposta);
+      break;
     }
-    
-    String resposta = client.readStringUntil('\r');
-    String resp=resposta.substring(1);
-    Serial.println(resp);
-    return resp; 
+  /*
+     while (client.connected()) {
+      resposta = client.readStringUntil('\r');
+      resposta=resposta.substring(1);
+      break;
+    }
+    */
+   // Serial.println(resposta);
+    client.stop();
+    return resposta; 
   }
 }
 
@@ -151,7 +158,8 @@ void setup() {
 }
 
 void loop() {
-  String compara="{\"ok\":\"ok\"}";
+  //String compara="{\"ok\":\"ok\"}";
+  String compara="HTTP/1.1 200 OK";
   if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()){ // Verifica se o cartao foi lido e ler
     Serial.printf("Tag:");
     tag="";
